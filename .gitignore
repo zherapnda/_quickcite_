@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Project specific
+temp/
+data/output/*
+!data/output/.gitkeep
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
