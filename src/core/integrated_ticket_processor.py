@@ -11,6 +11,7 @@ from typing import Dict, List, Tuple
 import sys
 import os
 
+
 # Add the parent directory to Python path so we can import our modules
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
@@ -33,12 +34,19 @@ class IntegratedTicketFiller:
     """
     
     def __init__(self, whisper_model="base"):
-        # Initialize all components
-        from ocr_extractor import OCRExtractor, TicketProcessor
-        from form_structure_detector import FormStructureDetector
-        from image_preprocessor import ImagePreprocessor
-        from docx_creator import DocxCreator
-        
+        # Use absolute imports to avoid issues
+        try:
+            from ocr_extractor import OCRExtractor, TicketProcessor
+            from form_structure_detector import FormStructureDetector
+            from image_preprocessor import ImagePreprocessor
+            from docx_creator import DocxCreator
+        except ImportError:
+            # Try with relative imports
+            from .ocr_extractor import OCRExtractor, TicketProcessor
+            from .form_structure_detector import FormStructureDetector
+            from .image_preprocessor import ImagePreprocessor
+            from .docx_creator import DocxCreator
+
         self.preprocessor = ImagePreprocessor()
         self.structure_detector = FormStructureDetector(debug=False)
         self.ocr_extractor = OCRExtractor()

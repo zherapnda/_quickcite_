@@ -1,23 +1,32 @@
-# src/core/ocr_extractor.py
-"""
-Lesson 6: Optical Character Recognition (OCR)
-Goal: Extract text from the ticket image and understand what goes where
-
-Key Concepts:
-1. OCR converts images to text
-2. We need to preserve position information
-3. Different OCR engines have different strengths
-"""
-
 import cv2
 import numpy as np
 import pytesseract
-import platform
 from PIL import Image
 from dataclasses import dataclass
 from typing import List, Tuple, Dict
 import re
-from . import configure_tesseract
+import os
+import platform
+
+# Configure Tesseract path for Windows
+if platform.system() == 'Windows':
+    # Try to find Tesseract
+    possible_paths = [
+        r'C:\Program Files\Tesseract-OCR\tesseract.exe',
+        r'C:\Program Files\Tesseract-OCR',
+        r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe',
+        r'C:\Tesseract-OCR\tesseract.exe',
+        r'C:\tesseract\tesseract.exe',
+    ]
+    
+    for path in possible_paths:
+        if os.path.exists(path):
+            pytesseract.pytesseract.tesseract_cmd = path
+            print(f"✅ Found Tesseract at: {path}")
+            break
+    else:
+        print("⚠️ Tesseract not found. OCR will not work!")
+        print("Download from: https://github.com/UB-Mannheim/tesseract/wiki")
 
 @dataclass
 class TextBlock:
