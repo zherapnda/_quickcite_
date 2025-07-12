@@ -1,20 +1,15 @@
 # src/app.py
-"""
-Lesson 8: Professional Web Interface
-Goal: Create a user-friendly interface for the ticket processing system
+# At the top of the file, fix the import
 
-Key Features:
-1. Drag-and-drop file upload
-2. Real-time processing status
-3. Preview of results
-4. Download processed files
-5. Processing history
-"""
+import sys
+import os
+
+# Add the current directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from flask import Flask, render_template, request, jsonify, send_file, session
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-import os
 import uuid
 from datetime import datetime
 import json

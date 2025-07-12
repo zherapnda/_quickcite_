@@ -12,10 +12,12 @@ Key Concepts:
 import cv2
 import numpy as np
 import pytesseract
+import platform
 from PIL import Image
 from dataclasses import dataclass
 from typing import List, Tuple, Dict
 import re
+from . import configure_tesseract
 
 @dataclass
 class TextBlock:

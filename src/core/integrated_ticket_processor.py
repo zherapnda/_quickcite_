@@ -1,14 +1,5 @@
 # src/core/integrated_ticket_processor.py
-"""
-Lesson 7: Complete Integration - Image + Audio = Filled Form
-Goal: Extract info from audio and intelligently fill the detected fields
-
-This combines:
-1. Your existing audio transcription (Whisper)
-2. OCR text extraction
-3. Smart field matching
-4. Final DOCX generation
-"""
+# Fix the imports at the top of the file
 
 import cv2
 import numpy as np
@@ -17,17 +8,22 @@ import json
 import re
 from datetime import datetime
 from typing import Dict, List, Tuple
-
-# We'll import from your original project
 import sys
-sys.path.append('../../form_filler_ai/src/core')  # Adjust path as needed
+import os
 
+# Add the parent directory to Python path so we can import our modules
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
+# Now import our modules with correct paths
 try:
+    # Try to import from your original project
     from audio_transcriber import AudioTranscriber
     from form_filler import FormFiller
     AUDIO_AVAILABLE = True
 except ImportError:
-    print("⚠️ Audio modules not found. We'll create simplified versions.")
+    print("⚠️ Audio modules not found. Using simplified versions.")
     AUDIO_AVAILABLE = False
 
 class IntegratedTicketFiller:
