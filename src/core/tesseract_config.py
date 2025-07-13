@@ -17,7 +17,7 @@ def configure_tesseract():
         # Find which path exists
         for path in possible_paths:
             if os.path.exists(path):
-                pytesseract.pytesseract.tesseract_cmd = path
+                pytesseract.pytesseract.tesseract_cmd = os.path.join(path, 'tesseract.exe')
                 print(f"✅ Found Tesseract at: {path}")
                 return True
         

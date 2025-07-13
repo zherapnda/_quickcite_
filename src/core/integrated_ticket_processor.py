@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Dict, List, Tuple
 import sys
 import os
+from docx.shared import Inches, Pt, RGBColor
 
 
 # Add the parent directory to Python path so we can import our modules
@@ -54,11 +55,12 @@ class IntegratedTicketFiller:
         
         # Audio components
         if AUDIO_AVAILABLE:
-            self.audio_transcriber = AudioTranscriber(model_size=whisper_model)
-            self.form_filler = FormFiller()
+          self.audio_transcriber = AudioTranscriber(model_size=whisper_model)
+          self.form_filler = FormFiller()
         else:
-            self.audio_transcriber = SimpleAudioTranscriber()
-            
+    # Import and use our simple transcriber
+         self.audio_transcriber = SimpleAudioTranscriber()
+    # No form_filler needed for simple version
         self.debug = True
         
     def extract_info_from_conversation(self, audio_path):
@@ -69,16 +71,10 @@ class IntegratedTicketFiller:
         print("\n🎙️ Processing audio recording...")
         
         # Transcribe audio
-        if AUDIO_AVAILABLE:
-            result = self.audio_transcriber.process_media_file(str(audio_path))
-            transcription = result['text']
-            
-            # Extract entities
-            entities = self.audio_transcriber.extract_entities(transcription)
-        else:
-            # Simplified version for testing
-            transcription = self.simple_transcribe(audio_path)
-            entities = self.simple_extract_entities(transcription)
+        result = self.audio_transcriber.process_media_file(audio_path)
+        transcription = result['text']
+
+        entities = self.audio_transcriber.extract_entities(transcription)
         
         print(f"\n📝 Transcription preview:")
         print(f"{transcription[:200]}...")
